@@ -252,14 +252,37 @@
   .village .sec-title{color:#fff;}
   .village .sec-sub{color:#B9D3F0;}
   .village .sec-sub b{color:#fff;font-weight:700;}
-  .floors{display:flex;flex-direction:column;gap:15px;margin-top:36px;}
-  .floor{background:rgba(255,255,255,.06);border-radius:20px;padding:24px 25px;
-    border:1px solid rgba(143,194,244,.22);backdrop-filter:blur(6px);}
-  .floor.two{border-color:rgba(143,194,244,.5);background:linear-gradient(135deg,rgba(94,163,240,.22),rgba(46,124,230,.10));}
-  .floor .fl{font-size:11px;font-weight:800;letter-spacing:.12em;color:#8FB4DE;text-transform:uppercase;margin-bottom:7px;}
-  .floor.two .fl{color:var(--sky);}
-  .floor .fr{font-weight:900;font-size:19.5px;color:#fff;margin-bottom:8px;letter-spacing:-.01em;}
-  .floor .fd{font-size:13px;line-height:1.75;color:#AECBEC;}
+  /* Moving Village 흐름 인포그래픽 — 교회에서 이웃에게로 흐르는 물 */
+  .mv-flow{margin-top:38px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+  .mvf-src{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;color:#D5E6F9;
+    background:rgba(255,255,255,.07);border:1px solid rgba(143,194,244,.3);border-radius:99px;padding:8px 18px;}
+  .mvf-src img{height:26px;width:auto;filter:brightness(0) invert(1);opacity:.9;}
+  .mvf-line{width:2px;height:34px;
+    background:repeating-linear-gradient(180deg,var(--sky) 0 6px,transparent 6px 13px);
+    background-size:100% 13px;
+    animation:flowline 1.15s linear infinite;}
+  @keyframes flowline{from{background-position:0 0;}to{background-position:0 13px;}}
+  @media (prefers-reduced-motion: reduce){.mvf-line{animation:none;}}
+  .mvf-hub{
+    font-weight:900;font-size:21px;letter-spacing:-.01em;color:#fff;
+    background:linear-gradient(135deg,var(--blue),var(--blue-deep));
+    border-radius:18px;padding:16px 34px;line-height:1.3;
+    box-shadow:0 6px 24px rgba(46,124,230,.45),inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .mvf-hub small{display:block;font-size:11px;font-weight:500;letter-spacing:.08em;color:#CFE3FB;margin-top:3px;}
+  .mvf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;}
+  .mvf-tile{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    background:rgba(255,255,255,.06);border:1px solid rgba(143,194,244,.24);
+    border-radius:16px;padding:16px 10px 14px;
+    font-size:12.5px;font-weight:700;color:#D5E6F9;letter-spacing:-.01em;
+  }
+  .mvf-tile svg{width:27px;height:27px;color:var(--sky);}
+  .mvf-dest{display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .mvf-chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .mvf-chips span{font-size:12px;font-weight:700;color:#EAF3FD;
+    background:rgba(143,194,244,.16);border:1px solid rgba(143,194,244,.35);border-radius:99px;padding:6px 14px;}
+  .mvf-dest p{font-size:13px;font-weight:500;color:#8FB4DE;letter-spacing:.02em;}
 
   /* ════════ JOIN ════════ */
   .join{background:linear-gradient(180deg,var(--navy) 0,#4574B0 90px,#BCD8F4 190px,#FFFFFF 280px);
@@ -495,18 +518,39 @@
         <span class="w">커뮤니티 카페·세미나·</span><span class="w">영어도서관·아동 돌봄을 통해</span> <span class="w">김포 시민 누구나</span> <span class="w">머물고 연결되는</span> <span class="w">열린 공간을 엽니다.</span></p>
     </div>
 
-    <div class="floors">
-      <div class="floor rv">
-        <div class="fl">1층 · 약 89.6평</div>
-        <div class="fr">예배 공간</div>
-        <div class="fd"><span class="w">온 공동체가 함께 예배하고</span> <span class="w">교제하는 자리.</span>
-          <span class="w">성도들의 헌신으로 입주를 시작했고,</span> <span class="w">예배 공간이 세워지고 있습니다.</span></div>
+    <div class="mv-flow rv">
+      <div class="mvf-src">
+        <img src="assets/mc_logo.png" alt="움직이는교회">
+        <span>움직이는교회</span>
       </div>
-      <div class="floor two rv">
-        <div class="fl">2층 · 약 96.6평</div>
-        <div class="fr">환대 공간</div>
-        <div class="fd"><span class="w">카페·클래스·도서관·아동 돌봄으로</span> <span class="w">도시를 섬기는 자리.</span>
-          <span class="w">이 공간의 개척을 위해</span> <span class="w"><b style="color:#fff">여러분의 동참</b>이 필요합니다.</span></div>
+      <div class="mvf-line" aria-hidden="true"></div>
+      <div class="mvf-hub">
+        Moving Village
+        <small>환대의 공간 · 김포 운양동</small>
+      </div>
+      <div class="mvf-line" aria-hidden="true"></div>
+      <div class="mvf-grid">
+        <div class="mvf-tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 10h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8.5 3.5c-.8 1.2.8 1.8 0 3M12 3.5c-.8 1.2.8 1.8 0 3"/></svg>
+          <span>커뮤니티 카페</span>
+        </div>
+        <div class="mvf-tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="11" rx="1.5"/><path d="M7.5 8.5h9M7.5 11.5h5.5"/><path d="M12 15.5v2.5M8.5 20.5h7"/></svg>
+          <span>세미나 · 클래스</span>
+        </div>
+        <div class="mvf-tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-1.8-1.6-4.4-2-8-1.7v13.4c3.6-.3 6.2.1 8 1.7 1.8-1.6 4.4-2 8-1.7V4.8c-3.6-.3-6.2.1-8 1.7z"/><path d="M12 6.5v13.4"/></svg>
+          <span>영어도서관</span>
+        </div>
+        <div class="mvf-tile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-6.5-4-8.4-7.6C2.2 9.7 3.6 6.5 6.6 6.5c1.9 0 3.4 1 4.4 2.6 1-1.6 2.5-2.6 4.4-2.6 3 0 4.4 3.2 3 5.9C20.5 16 14 20 12 20z"/></svg>
+          <span>아동 돌봄</span>
+        </div>
+      </div>
+      <div class="mvf-line" aria-hidden="true"></div>
+      <div class="mvf-dest">
+        <div class="mvf-chips"><span>가정</span><span>청년</span><span>외국인 이웃</span></div>
+        <p>김포의 일상 속으로 흐릅니다</p>
       </div>
     </div>
   </div>
