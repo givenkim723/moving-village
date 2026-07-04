@@ -38,7 +38,7 @@
     -webkit-font-smoothing:antialiased;
     line-height:1.7;
     overflow-x:hidden;
-    word-break:keep-all;overflow-wrap:break-word;
+    overflow-wrap:break-word;
   }
   img{max-width:100%;display:block;}
 
@@ -61,8 +61,8 @@
   .sec-sub,.ndesc,.nserve,.era-text,.hero-lead,.who-close p,.fd,.viz-cap,.join-contact,.jf-sub{
     text-wrap:pretty;
   }
-  /* 의미 단위 묶음 — 줄바꿈은 구(句)와 구 사이에서만 일어난다 */
-  .w{display:inline-block;}
+  /* 여백 없는 꽉 찬 줄 우선 — 글자 단위 줄바꿈(기사·카톡 방식), 의미 단위 스팬은 비활성 */
+  .w{display:inline;}
 
   section{padding:76px 0;}
 
