@@ -131,7 +131,8 @@
     display:block;white-space:nowrap;
     animation:flowdown var(--d,52s) linear infinite;
   }
-  @keyframes flowdown{from{transform:translateY(-50%);}to{transform:translateY(0);}}
+  /* --shift = 반복 단위(스팬 절반)의 실측 픽셀 — JS가 지정. 컨테이너 % 기준이면 주기가 어긋나 끊긴다 */
+  @keyframes flowdown{from{transform:translateY(var(--shift,-50%));}to{transform:translateY(0);}}
   @media (prefers-reduced-motion: reduce){.hero-verse .vflow{animation:none;}}
   /* 위아래 가장자리 부드럽게 용해 */
   .hero-verse{
@@ -621,12 +622,21 @@
 <script>
   // 말씀 물줄기 — 글자 수와 무관하게 모든 줄이 같은 픽셀 속도로 흐르도록
   // (짝을 이룬 두 줄의 길이가 달라도 어긋나지 않는다)
+  // 끊김 없는 루프 조건: 이동 거리 = 반복 단위(스팬 1개)의 정수배 실측 픽셀,
+  // 콘텐츠 총길이 ≥ 컨테이너 + 이동 거리 (부족하면 스팬 복제로 채움)
   document.fonts.ready.then(()=>{
     document.querySelectorAll('.hero-verse').forEach(v=>{
       const flow=v.querySelector('.vflow'); if(!flow) return;
+      const unit=flow.children[0]?flow.children[0].getBoundingClientRect().height:0;
+      if(!unit) return;
+      while(unit*flow.children.length < v.clientHeight*2 && flow.children.length<40){
+        flow.appendChild(flow.children[0].cloneNode(true));
+        flow.appendChild(flow.children[0].cloneNode(true));
+      }
       const speed=parseFloat(v.dataset.speed||'8'); // px/s
-      const half=flow.scrollHeight/2;
-      if(half>0) flow.style.animationDuration=(half/speed)+'s';
+      const half=unit*(flow.children.length/2);
+      flow.style.setProperty('--shift',(-half)+'px');
+      flow.style.animationDuration=(half/speed)+'s';
     });
   });
 
