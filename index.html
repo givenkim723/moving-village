@@ -57,10 +57,12 @@
   .sec-title em{font-style:normal;color:var(--blue);}
   .sec-sub{font-size:14.5px;color:var(--ink-soft);line-height:1.85;font-weight:400;}
 
-  /* 한국어 조판 — 본문은 고아 단어 방지, 어절 단위 줄바꿈은 body의 keep-all이 담당 */
-  .sec-sub,.ndesc,.nserve,.era-text,.hero-lead,.who-close p,.fd,.viz-cap,.join-contact,.jf-sub{
-    text-wrap:pretty;
+  /* 한국어 조판 — 본문 문단은 양쪽 정렬(신문 방식): 오른쪽 끝이 완전히 맞춰진다.
+     줄바꿈으로 끝나는 짧은 텍스트(캡션·연락처 등)는 제외. */
+  .sec-sub,.ndesc,.nserve,.era-text,.hero-lead,.fd{
+    text-align:justify;
   }
+  .viz-cap,.join-contact,.jf-sub,.who-close p{text-wrap:pretty;}
   /* 여백 없는 꽉 찬 줄 우선 — 글자 단위 줄바꿈(기사·카톡 방식), 의미 단위 스팬은 비활성 */
   .w{display:inline;}
 
