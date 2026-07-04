@@ -50,11 +50,17 @@
   }
   .sec-title{
     font-weight:900;
-    font-size:clamp(25px,6.8vw,33px);line-height:1.32;letter-spacing:-.02em;
+    font-size:clamp(23px,6.6vw,33px);line-height:1.32;letter-spacing:-.02em;
     margin-bottom:16px;color:var(--ink);
+    text-wrap:balance;
   }
   .sec-title em{font-style:normal;color:var(--blue);}
   .sec-sub{font-size:14.5px;color:var(--ink-soft);line-height:1.85;font-weight:400;}
+
+  /* 한국어 조판 — 본문은 고아 단어 방지, 어절 단위 줄바꿈은 body의 keep-all이 담당 */
+  .sec-sub,.ndesc,.nserve,.era-text,.hero-lead,.who-close p,.fd,.viz-cap,.join-contact,.jf-sub{
+    text-wrap:pretty;
+  }
 
   section{padding:76px 0;}
 
@@ -132,8 +138,9 @@
   .hero-kicker b{color:var(--blue-deep);font-weight:800;}
   .hero h1{
     font-weight:900;color:var(--ink);
-    font-size:clamp(38px,10.6vw,58px);line-height:1.22;letter-spacing:-.035em;
+    font-size:clamp(34px,10.4vw,58px);line-height:1.22;letter-spacing:-.035em;
     margin-bottom:22px;
+    text-wrap:balance;
   }
   .hero h1 em{
     font-style:normal;display:inline-block;
@@ -221,7 +228,7 @@
   .viz-waffle i.f{background:var(--blue);}
   .viz-cap{font-size:11px;color:var(--ink-soft);margin:-6px 0 12px;}
   .viz-cap b{color:var(--blue-deep);font-weight:700;}
-  .need .nstat{font-weight:800;font-size:16.5px;line-height:1.4;margin-bottom:10px;color:var(--ink);letter-spacing:-.01em;padding-right:52px;}
+  .need .nstat{font-weight:800;font-size:16.5px;line-height:1.4;margin-bottom:10px;color:var(--ink);letter-spacing:-.01em;padding-right:52px;text-wrap:balance;}
   .need .nstat b{font-size:29px;font-weight:900;letter-spacing:-.02em;margin:0 1px;}
   .need .nstat span{font-size:15px;color:var(--blue);font-weight:800;}
   .need .ndesc{font-size:13px;line-height:1.72;color:var(--ink-soft);}
