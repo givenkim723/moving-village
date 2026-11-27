@@ -139,16 +139,19 @@
   .done { display:none; padding:8px 0 0; }
   .done.show { display:block; }
   .done:focus { outline:none; }
-  .done h2 { text-align:center; margin-top:20px; }
-  .seal { text-align:center; margin-top:36px; }
+  .done h2 { margin-top:20px; }
+  .seal { margin-top:36px; }
   .seal img { width:48px; height:48px; }
 
-  .foot { margin-top:48px; padding:20px 0 calc(28px + env(safe-area-inset-bottom)); border-top:1px solid var(--rule); text-align:center; font-size:13px; line-height:1.9; color:var(--mute); }
+  .foot { margin-top:48px; padding:20px 0 calc(28px + env(safe-area-inset-bottom)); border-top:1px solid var(--rule); font-size:13px; line-height:1.9; color:var(--mute); }
   .foot a { color:var(--ink); font-weight:700; text-decoration:none; }
 
   .rv { opacity:0; transition:opacity .4s ease; }
   .rv.on { opacity:1; }
   @media (prefers-reduced-motion: reduce) { .rv { opacity:1; transition:none; } html { scroll-behavior:auto; } }
+  /* 줄바꿈: 제목·짧은 문구는 어절 단위로 끊고 줄 길이를 고르게. 본문 문단은 글자 단위 그대로 */
+  h1, h2, h3, .say, .label, .card .t, .field > label, .lbl, details.more summary, .opt span, .consent dt, .btn { word-break:keep-all; overflow-wrap:break-word; }
+  h1, h2, h3, .say { text-wrap:balance; }
   @media (max-width:420px) { h1 { font-size:32px; } }
 </style>
 </head>
@@ -180,7 +183,7 @@
   <!-- ════ 2. 교회 소개 (참여 카드 2쪽) ════ -->
   <section class="about rv">
     <div class="label"><span class="n">01</span>움직이는교회</div>
-    <h2>건물이 아니라 사람으로 시작한 교회</h2>
+    <h2>건물이 아니라<br>사람으로 시작한 교회</h2>
     <p>이제 김포 운양동에서 이웃을 향해 열린 환대의 공간, <strong>Moving Village</strong>를 함께 세워 가고 있습니다.</p>
     <!-- TODO(담당 교역자 확인): 공식 DNA·비전 문구로 교체 -->
     <p>회복된 공동체가 도시로 흘러, 김포의 일상 속 가정과 청년, 외국인 이웃에게 닿기를 소망합니다. 새로운 이웃을 만나고, 서로를 알아가며, 함께 믿음의 길을 걷는 공동체가 되기를 바랍니다.</p>
