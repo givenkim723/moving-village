@@ -77,6 +77,13 @@
   .card .t span { display:block; }
   .card .t small { font-size:14px; font-weight:500; color:var(--mute); margin-left:6px; }
 
+  .card .d { font-size:14px; color:var(--mute); margin-top:3px; line-height:1.5; }
+  h3.part { font-size:20px; font-weight:800; margin:40px 0 14px; }
+  h3.part + .cards { margin-top:0; }
+  .dna { list-style:none; padding:0; margin:0 0 20px; border-top:1px solid var(--rule); }
+  .dna li { display:flex; gap:14px; padding:13px 0; border-bottom:1px solid var(--rule); font-size:16.5px; font-weight:700; color:var(--ink); line-height:1.5; word-break:keep-all; }
+  .dna li .n { flex:0 0 26px; font-size:14px; font-weight:700; color:var(--water-ink); font-variant-numeric:tabular-nums; padding-top:2px; }
+
   /* 3주 */
   .num { display:flex; gap:14px; padding:20px 0; border-bottom:1px solid var(--rule); }
   .num:first-of-type { border-top:1px solid var(--rule); }
@@ -158,7 +165,7 @@
   .foot a { color:var(--ink); font-weight:700; text-decoration:none; }
 
   /* 줄바꿈: 제목·짧은 문구는 어절 단위로 끊고 줄 길이를 고르게. 본문 문단은 글자 단위 그대로 */
-  h1, h2, h3, .say, .label, .card .t, .field > label, .lbl, details.more summary, .opt span, .consent dt, .btn { word-break:keep-all; overflow-wrap:break-word; }
+  h1, h2, h3, .say, .label, .card .t, .card .d, .field > label, .lbl, details.more summary, .opt span, .consent dt, .btn { word-break:keep-all; overflow-wrap:break-word; }
   h1, h2, h3, .say { text-wrap:balance; }
   @media (max-width:420px) { h1 { font-size:32px; } }
 </style>
@@ -190,10 +197,30 @@
   <!-- ════ 2. 교회 소개 (참여 카드 2쪽) ════ -->
   <section class="step about" data-step="1" data-title="01 움직이는교회">
     <div class="label"><span class="n">01</span>움직이는교회</div>
-    <h2>건물이 아니라<br>사람으로 시작한 교회</h2>
+    <!-- 정체성·DNA 출처: movingchurch-web/commit.html(성도 작정서) 02 정체성·04 교회 DNA. 문구를 바꾸면 양쪽을 함께 고칠 것 -->
+    <h2>주일에 모이고,<br>일상에서 교회로 삽니다</h2>
+    <p>움직이는교회는 주일에 모이는 교회일 뿐 아니라, <strong>일상에서 교회로 살아가는 운동</strong>을 하는 교회입니다. 그래서 "무엇을 하느냐"보다 먼저 <strong>"누구로 사느냐"</strong>를 묻습니다.</p>
+
+    <h3 class="part">정체성</h3>
+    <div class="cards">
+      <div class="card"><div class="t">성전된 존재</div><div class="d">고전 3:16</div></div>
+      <div class="card"><div class="t">그리스도의 몸</div><div class="d">고전 12:27</div></div>
+      <div class="card"><div class="t">왕 같은 제사장</div><div class="d">거룩한 나라, 하나님의 소유된 백성 · 벧전 2:9</div></div>
+    </div>
+
+    <h3 class="part">교회 DNA</h3>
+    <figure class="photo"><img src="img/dna-tree.jpg" alt="씨앗과 물의 심볼이 자라 열매 맺는 나무가 되는 그림 — 교회로 살면, 교회는 개척된다" width="868" height="356" loading="lazy" decoding="async"><figcaption>움직이는교회 DNA 심볼 - 씨앗, 나무</figcaption></figure>
+    <ol class="dna">
+      <li><span class="n">01</span>예수 그리스도의 복음 위에 세워진 교회</li>
+      <li><span class="n">02</span>성전된 공동체로 살아가는 교회</li>
+      <li><span class="n">03</span>사람을 일으키는 교회</li>
+      <li><span class="n">04</span>일상의 선교사로 살아가는 교회</li>
+      <li><span class="n">05</span>서로 사랑함으로 하나님 나라의 환대를 드러내는 교회</li>
+      <li><span class="n">06</span>환대의 공간을 개척하는 교회</li>
+    </ol>
     <p>이제 김포 운양동에서 이웃을 향해 열린 환대의 공간, <strong>Moving Village</strong>를 함께 세워 가고 있습니다.</p>
-    <!-- TODO(담당 교역자 확인): 공식 DNA·비전 문구로 교체 -->
-    <p>회복된 공동체가 도시로 흘러, 김포의 일상 속 가정과 청년, 외국인 이웃에게 닿기를 소망합니다. 새로운 이웃을 만나고, 서로를 알아가며, 함께 믿음의 길을 걷는 공동체가 되기를 바랍니다.</p>
+
+    <h3 class="part">함께 모이는 시간과 자리</h3>
     <div class="cards">
       <!-- 출처: wiki/pages/02-worship/current-worship.md (2026-10~ 시간표, 2026-11-23 확인) -->
       <div class="card"><div class="k">주일 예배</div><div class="t"><span>오전 11시 <small>1부 P&amp;B, KIDS</small></span><span>오전 11시 30분 <small>YOUTH</small></span><span>오후 2시 <small>2부 Moving Worship</small></span></div></div>
