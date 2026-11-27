@@ -5,425 +5,332 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>새이웃 만남 — 움직이는교회</title>
 <meta name="description" content="새이웃 여러분, 환영합니다. 움직이는교회 새이웃 만남 참여 신청 페이지입니다.">
-<meta name="theme-color" content="#FBF7F0" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1C1915" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://moving-village.vercel.app/newcomer">
 <meta property="og:title" content="새이웃 여러분, 환영합니다 — 움직이는교회">
 <meta property="og:description" content="새로운 이웃을 만나고, 서로를 알아가며, 함께 믿음의 길을 걷는 공동체. 새이웃 만남에 참여해 주세요.">
 <meta property="og:image" content="https://moving-village.vercel.app/assets/og_cover.png">
-<link rel="icon" href="../assets/mc_logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="img/logo.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.min.css">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-
-  /* ── 새이웃 — 따뜻한 환대 톤 (크림 바탕 + 메인 사이트 블루 포인트) ── */
-  :root{
-    --bg:#FBF7F0;
-    --bg-deep:#F4ECDF;
-    --card:#FFFFFF;
-    --ink:#2B2620;
-    --ink-soft:#6E6458;
-    --line:#E6DCCD;
-    --warm:#C9773B;
-    --warm-soft:#F6E6D6;
-    --blue:#2E7CE6;
-    --blue-deep:#1B5FC8;
-    --blue-soft:#E3EEFC;
-    --ok:#2F8F5B;
-    --err:#C2412D;
-    --shadow:0 1px 2px rgba(60,40,20,.05),0 8px 28px rgba(60,40,20,.07);
+  /* 디자인 시스템: 성도 작정서(movingchurch.kr/commit)와 같은 토큰·구성요소 */
+  :root {
+    --page:#FFFFFF; --kraft:#D6D3C4; --kraft-soft:#ECEAE2;
+    --ink:#141A1E; --ink-soft:#3F474E; --mute:#848B92; --rule:#D9D6CC;
+    --water:#18A8C8; --water-ink:#0E7390;
+    --seed:#6A7A32; --seed-ink:#586828;
+    --err:#B3261E;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#1C1915;--bg-deep:#24201B;--card:#2A2520;--ink:#F2EBE1;--ink-soft:#B5AA9C;
-      --line:#3D362E;--warm:#E39A5F;--warm-soft:#3A2D22;--blue:#6AA5F2;--blue-deep:#8DBAF5;
-      --blue-soft:#1F2C3D;--ok:#5CC28A;--err:#F07A66;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#1C1915;--bg-deep:#24201B;--card:#2A2520;--ink:#F2EBE1;--ink-soft:#B5AA9C;
-    --line:#3D362E;--warm:#E39A5F;--warm-soft:#3A2D22;--blue:#6AA5F2;--blue-deep:#8DBAF5;
-    --blue-soft:#1F2C3D;--ok:#5CC28A;--err:#F07A66;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 28px rgba(0,0,0,.25);
-  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+  body { margin:0; background:var(--page); color:var(--ink-soft); font-family:'Pretendard',-apple-system,system-ui,sans-serif; letter-spacing:-0.01em; line-height:1.8; font-size:16px; }
+  a { color:var(--water-ink); }
+  .wrap { max-width:600px; margin:0 auto; padding:0 20px 40px; }
 
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
-  body{
-    font-family:'Noto Sans KR',sans-serif;
-    background:var(--bg);color:var(--ink);
-    line-height:1.75;-webkit-font-smoothing:antialiased;
-    overflow-wrap:break-word;word-break:keep-all;
-  }
-  a{color:var(--blue-deep);}
-  .wrap{max-width:560px;margin:0 auto;padding:0 20px;}
-  .serif{font-family:'Noto Serif KR',serif;}
+  /* 러닝헤드 · 읽은 만큼 차는 선 */
+  .top { position:sticky; top:0; z-index:5; background:rgba(255,255,255,.96); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); margin:0 -20px; padding:14px 20px 12px; border-bottom:1px solid var(--rule); }
+  .top .row { display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:500; color:var(--mute); }
+  .top .lh { display:flex; align-items:center; gap:10px; }
+  .top .tlogo { height:26px; width:auto; }
+  .top .track { position:absolute; top:0; left:0; right:0; height:2px; }
+  .top .fill { height:100%; width:0; background:var(--water); }
+  body.at-form .top .fill { background:var(--seed); }
+  .top a { font-weight:700; color:var(--ink); text-decoration:none; }
 
-  /* 등장 애니메이션 */
-  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}
-  .rv.on{opacity:1;transform:none;}
-  @media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none;}html{scroll-behavior:auto;}}
+  section { padding-top:28px; }
+  .label { font-size:13px; font-weight:500; color:var(--mute); margin-top:44px; }
+  .label .n { font-weight:700; color:var(--water-ink); margin-right:8px; font-variant-numeric:tabular-nums; }
+  #join .label .n { color:var(--seed-ink); }
+  h1, h2, h3 { color:var(--ink); margin:0; }
+  h1 { font-size:36px; line-height:1.2; font-weight:800; margin:36px 0 10px; letter-spacing:-0.02em; }
+  h2 { font-size:26px; line-height:1.3; font-weight:800; margin:8px 0 20px; letter-spacing:-0.02em; }
+  h3 { font-size:17px; line-height:1.45; font-weight:700; }
+  p { margin:14px 0; font-size:16px; line-height:1.8; color:var(--ink-soft); }
+  p strong { color:var(--ink); font-weight:700; }
 
-  /* ── 상단 바 ── */
-  .top{padding:18px 0 0;}
-  .top .wrap{display:flex;align-items:center;gap:10px;}
-  .top img{width:30px;height:30px;border-radius:50%;background:#fff;padding:3px;object-fit:contain;box-shadow:0 0 0 1px var(--line);}
-  .top span{font-size:13px;font-weight:700;letter-spacing:.02em;color:var(--ink-soft);}
+  /* 표지 */
+  .cover { margin:0 -20px; padding:36px 20px 40px; background:var(--kraft); color:var(--ink); }
+  .cover .logo { height:48px; width:auto; display:block; }
+  .cover .sub { font-size:15px; color:var(--ink-soft); margin-top:6px; }
+  .cover .mc { margin-top:28px; padding-top:18px; border-top:1px solid rgba(20,26,30,.18); font-size:16px; color:var(--ink); }
+  .cover .mc b { font-weight:800; }
 
-  /* ── 1. 환영 ── */
-  .hello{padding:44px 0 36px;}
-  .tag{
-    display:inline-block;font-size:12px;font-weight:800;letter-spacing:.12em;
-    color:var(--warm);background:var(--warm-soft);padding:5px 12px;border-radius:99px;margin-bottom:18px;
-  }
-  .hello h1{
-    font-family:'Noto Serif KR',serif;font-weight:700;
-    font-size:clamp(30px,8.6vw,42px);line-height:1.35;letter-spacing:-.02em;margin-bottom:20px;
-  }
-  .hello h1 em{font-style:normal;color:var(--blue);}
-  .hello p{font-size:16px;color:var(--ink-soft);line-height:1.9;}
-  .hello p + p{margin-top:12px;}
-  .btn-jump{
-    display:inline-flex;align-items:center;gap:8px;margin-top:28px;
-    font-size:15px;font-weight:700;color:#fff;background:var(--blue);
-    padding:14px 22px;border-radius:14px;text-decoration:none;box-shadow:var(--shadow);
-  }
-  .btn-jump:active{transform:scale(.98);}
-  .btn-jump svg{width:16px;height:16px;}
+  /* 사진 */
+  .photo { margin:26px -20px; }
+  .photo img { display:block; width:100%; height:auto; }
+  .photo figcaption { margin:12px 20px 0; text-align:center; font-size:13px; color:var(--mute); }
 
-  section{padding:36px 0;}
-  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--warm);margin-bottom:10px;}
-  h2{font-family:'Noto Serif KR',serif;font-size:clamp(22px,6.2vw,28px);line-height:1.4;letter-spacing:-.015em;margin-bottom:14px;}
-  .sub{font-size:15px;color:var(--ink-soft);line-height:1.85;}
+  /* 사실 목록 */
+  .cards { margin:20px 0; border-top:1px solid var(--rule); }
+  .card { padding:14px 0; border-bottom:1px solid var(--rule); }
+  .card .k { font-size:13px; color:var(--mute); }
+  .card .t { font-size:17px; font-weight:700; color:var(--ink); margin-top:2px; line-height:1.6; }
+  .card .t span { display:block; }
+  .card .t small { font-size:14px; font-weight:500; color:var(--mute); margin-left:6px; }
 
-  /* ── 2. 교회 소개 ── */
-  .about-card{
-    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:20px;
-    padding:22px;box-shadow:var(--shadow);
-  }
-  .about-card .kicker{font-size:14px;font-weight:700;color:var(--blue-deep);margin-bottom:8px;}
-  .about-card p{font-size:15px;color:var(--ink-soft);line-height:1.85;}
-  .facts{margin-top:18px;display:grid;gap:10px;}
-  .fact{display:flex;gap:12px;align-items:flex-start;padding-top:12px;border-top:1px dashed var(--line);}
-  .fact b{flex:0 0 64px;font-size:13px;font-weight:800;color:var(--ink);}
-  .fact span{font-size:14px;color:var(--ink-soft);line-height:1.7;}
+  /* 3주 */
+  .num { display:flex; gap:14px; padding:20px 0; border-bottom:1px solid var(--rule); }
+  .num:first-of-type { border-top:1px solid var(--rule); }
+  .num .n { flex:0 0 40px; font-size:15px; font-weight:700; color:var(--mute); line-height:1.45; padding-top:2px; font-variant-numeric:tabular-nums; }
+  .num .b { flex:1; min-width:0; }
+  .num .b h3 { margin:0 0 4px; }
+  .num .b .say { font-size:15.5px; font-weight:500; color:var(--water-ink); margin:0 0 6px; }
+  .num .b p { margin:0; font-size:15.5px; line-height:1.75; }
 
-  /* ── 3. 3주 미리보기 ── */
-  .weeks{margin-top:22px;display:grid;gap:12px;counter-reset:wk;}
-  .week{
-    position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;
-    padding:18px 18px 18px 74px;box-shadow:var(--shadow);
-  }
-  .week::before{
-    counter-increment:wk;content:counter(wk)"주";
-    position:absolute;left:16px;top:18px;width:44px;height:44px;border-radius:50%;
-    display:grid;place-items:center;font-size:13px;font-weight:800;
-    color:var(--blue-deep);background:var(--blue-soft);
-  }
-  .week h3{font-size:17px;font-weight:800;margin-bottom:2px;}
-  .week q{display:block;font-family:'Noto Serif KR',serif;font-size:14px;color:var(--warm);quotes:"“" "”";margin-bottom:6px;}
-  .week p{font-size:14px;color:var(--ink-soft);line-height:1.75;}
-  .note{
-    margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--warm-soft);
-    font-size:14px;line-height:1.75;color:var(--ink);
-  }
-  .note b{color:var(--warm);}
+  .info { padding:14px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); font-size:14.5px; line-height:1.75; color:var(--ink-soft); margin:24px 0; }
+  .info strong { color:var(--ink); }
 
-  /* ── 4. 참여 카드 ── */
-  .card{
-    margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:22px;
-    padding:24px 20px;box-shadow:var(--shadow);
-  }
-  .field{margin-bottom:18px;}
-  .field > label,.field > .lbl{display:block;font-size:14px;font-weight:700;margin-bottom:8px;}
-  .req{color:var(--err);font-weight:800;margin-left:2px;}
-  .opt{font-size:12px;font-weight:500;color:var(--ink-soft);margin-left:4px;}
-  input[type=text],input[type=tel],textarea,select{
-    width:100%;font:inherit;font-size:16px;color:var(--ink);
-    background:var(--bg);border:1.5px solid var(--line);border-radius:12px;
-    padding:13px 14px;min-height:50px;outline:none;transition:border-color .15s,box-shadow .15s;
-    -webkit-appearance:none;appearance:none;
-  }
-  textarea{min-height:96px;resize:vertical;line-height:1.6;}
-  input::placeholder,textarea::placeholder{color:var(--ink-soft);opacity:.7;}
-  input:focus,textarea:focus,select:focus{border-color:var(--blue);box-shadow:0 0 0 4px var(--blue-soft);}
-  .field.invalid input{border-color:var(--err);}
-  .msg{display:none;font-size:13px;color:var(--err);margin-top:6px;}
-  .field.invalid .msg{display:block;}
+  /* 폼 */
+  .field { padding:22px 0; border-top:1px solid var(--rule); margin:0; }
+  .field:first-of-type { border-top:0; padding-top:8px; }
+  .field.invalid { border-top-color:var(--err); }
+  .field.invalid > label, .field.invalid > .lbl { color:var(--err); }
+  .field > label, .field > .lbl { display:block; font-size:16px; font-weight:700; color:var(--ink); margin-bottom:6px; line-height:1.5; }
+  .req { color:var(--seed-ink); margin-left:4px; font-size:13px; font-weight:700; }
+  input[type=text], input[type=tel], textarea { width:100%; font:inherit; font-size:17px; padding:10px 0; border:0; border-bottom:1.5px solid var(--ink); border-radius:0; background:none; color:var(--ink); -webkit-appearance:none; appearance:none; }
+  input[type=text]:focus, input[type=tel]:focus { outline:none; border-bottom-color:var(--seed); box-shadow:0 1px 0 var(--seed); }
+  .field.invalid input { border-bottom-color:var(--err); }
+  input::placeholder, textarea::placeholder { color:var(--mute); }
+  textarea { min-height:120px; resize:vertical; line-height:1.7; border:1px solid var(--rule); padding:12px; font-size:16px; }
+  textarea:focus { outline:none; border-color:var(--seed); box-shadow:inset 0 0 0 1px var(--seed); }
+  .msg { display:none; color:var(--err); font-size:13.5px; margin-top:8px; font-weight:600; }
+  .field.invalid .msg { display:block; }
 
-  /* 칩 선택 (라디오) */
-  .chips{display:flex;flex-wrap:wrap;gap:8px;}
-  .chips label{position:relative;}
-  .chips input{position:absolute;opacity:0;pointer-events:none;}
-  .chips span{
-    display:inline-block;font-size:14px;font-weight:500;padding:10px 14px;min-height:44px;line-height:22px;
-    border:1.5px solid var(--line);border-radius:99px;background:var(--bg);color:var(--ink);cursor:pointer;
-    transition:background .15s,border-color .15s,color .15s;
-  }
-  .chips input:checked + span{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-deep);font-weight:700;}
-  .chips input:focus-visible + span{box-shadow:0 0 0 4px var(--blue-soft);}
+  .opts { display:flex; flex-wrap:wrap; gap:0 24px; }
+  .opt { display:flex; gap:12px; align-items:flex-start; padding:10px 0; cursor:pointer; font-size:15.5px; line-height:1.55; color:var(--ink-soft); }
+  .opt input { appearance:none; -webkit-appearance:none; width:20px; height:20px; flex:0 0 20px; margin:2px 0 0; border:1.5px solid var(--ink); background:#fff; cursor:pointer; }
+  .opt input:checked { background-color:var(--seed); border-color:var(--seed); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size:14px; background-position:center; background-repeat:no-repeat; }
+  .opt input:focus-visible { outline:2px solid var(--seed); outline-offset:2px; }
+  .opt:has(input:checked) { color:var(--ink); font-weight:700; }
 
-  /* 선택 항목 접기 */
-  details.more{margin:6px 0 20px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  details.more summary{
-    list-style:none;cursor:pointer;padding:16px 0;font-size:15px;font-weight:700;
-    display:flex;align-items:center;justify-content:space-between;gap:12px;
-  }
-  details.more summary::-webkit-details-marker{display:none;}
-  details.more summary small{display:block;font-size:12.5px;font-weight:500;color:var(--ink-soft);}
-  details.more summary .chev{flex:0 0 auto;width:22px;height:22px;transition:transform .2s;color:var(--ink-soft);}
-  details.more[open] summary .chev{transform:rotate(180deg);}
-  details.more .inner{padding:4px 0 6px;}
+  details.more { border-top:1px solid var(--rule); }
+  details.more summary { list-style:none; cursor:pointer; padding:20px 0; display:flex; justify-content:space-between; align-items:baseline; gap:12px; font-size:16px; font-weight:700; color:var(--ink); }
+  details.more summary::-webkit-details-marker { display:none; }
+  details.more summary small { display:block; font-size:13.5px; font-weight:400; color:var(--mute); margin-top:3px; }
+  details.more summary .tg { flex:0 0 auto; font-size:13px; font-weight:500; color:var(--mute); }
+  details.more summary .tg::after { content:'펼치기'; }
+  details.more[open] summary .tg::after { content:'접기'; }
+  details.more .field:first-of-type { border-top:1px solid var(--rule); padding-top:22px; }
 
-  /* 개인정보 동의 */
-  .consent{background:var(--bg-deep);border-radius:14px;padding:16px;margin-bottom:20px;}
-  .consent dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px;line-height:1.65;color:var(--ink-soft);margin-bottom:14px;}
-  .consent dt{font-weight:800;color:var(--ink);}
-  .consent .fine{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;line-height:1.65;}
-  .check{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14.5px;font-weight:700;line-height:1.5;}
-  .check input{flex:0 0 auto;width:22px;height:22px;margin-top:1px;accent-color:var(--blue);}
+  .consent { margin-top:8px; padding-top:22px; border-top:2px solid var(--ink); }
+  .consent dl { display:grid; grid-template-columns:auto 1fr; gap:6px 14px; margin:0 0 12px; font-size:14px; line-height:1.7; color:var(--ink-soft); }
+  .consent dt { font-weight:700; color:var(--ink); }
+  .consent dd { margin:0; }
+  .consent .fine { font-size:13.5px; color:var(--mute); margin:0 0 6px; }
+  .consent .opt { font-weight:700; color:var(--ink); }
 
-  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .hp { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
 
-  .btn-submit{
-    width:100%;min-height:56px;font:inherit;font-size:16px;font-weight:800;color:#fff;
-    background:var(--blue);border:0;border-radius:14px;cursor:pointer;box-shadow:var(--shadow);
-    transition:background .15s,opacity .15s,transform .1s;
-  }
-  .btn-submit:hover{background:var(--blue-deep);}
-  .btn-submit:active{transform:scale(.99);}
-  .btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none;}
-  .btn-submit.loading{opacity:.8;cursor:progress;}
-  .form-err{display:none;margin-top:14px;padding:12px 14px;border-radius:12px;font-size:14px;line-height:1.65;
-    color:var(--err);background:color-mix(in srgb,var(--err) 10%,transparent);}
-  .form-err.show{display:block;}
+  .btn { display:block; width:100%; font:inherit; font-size:16px; font-weight:700; padding:14px; border-radius:4px; border:1.5px solid var(--ink); background:var(--ink); color:#fff; cursor:pointer; text-align:center; text-decoration:none; }
+  .btn.seed { background:var(--seed); border-color:var(--seed); margin-top:22px; }
+  .btn:disabled { opacity:.5; cursor:default; }
+  .btn.loading { cursor:progress; }
+  .btn:focus-visible { outline:2px solid var(--seed); outline-offset:2px; }
+  .cover + p { margin-top:32px; }
+  .jump { margin-top:28px; }
 
-  /* ── 5. 완료 ── */
-  .done{display:none;text-align:center;padding:34px 22px;}
-  .done.show{display:block;}
-  .done .ic{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;background:var(--warm-soft);color:var(--warm);}
-  .done .ic svg{width:30px;height:30px;}
-  .done h3{font-family:'Noto Serif KR',serif;font-size:23px;line-height:1.45;margin-bottom:14px;}
-  .done p{font-size:15px;color:var(--ink-soft);line-height:1.9;text-align:left;}
-  .done p + p{margin-top:10px;}
+  .form-err { display:none; color:var(--err); font-size:14px; font-weight:600; border-top:1px solid var(--err); padding:12px 0; margin:14px 0; line-height:1.7; }
+  .form-err.show { display:block; }
+  .form-err a { color:var(--err); }
 
-  /* ── 푸터 ── */
-  footer{padding:40px 0 calc(48px + env(safe-area-inset-bottom));text-align:center;}
-  footer .contact{font-size:14px;color:var(--ink-soft);}
-  footer .contact a{font-weight:700;text-decoration:none;}
-  footer .home{display:inline-block;margin-top:14px;font-size:13px;color:var(--ink-soft);}
-  footer .addr{margin-top:18px;font-size:12px;color:var(--ink-soft);opacity:.8;}
+  /* 완료 */
+  .done { display:none; padding:8px 0 0; }
+  .done.show { display:block; }
+  .done:focus { outline:none; }
+  .done h2 { text-align:center; margin-top:20px; }
+  .seal { text-align:center; margin-top:36px; }
+  .seal img { width:48px; height:48px; }
+
+  .foot { margin-top:48px; padding:20px 0 calc(28px + env(safe-area-inset-bottom)); border-top:1px solid var(--rule); text-align:center; font-size:13px; line-height:1.9; color:var(--mute); }
+  .foot a { color:var(--ink); font-weight:700; text-decoration:none; }
+
+  .rv { opacity:0; transition:opacity .4s ease; }
+  .rv.on { opacity:1; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity:1; transition:none; } html { scroll-behavior:auto; } }
+  @media (max-width:420px) { h1 { font-size:32px; } }
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="wrap">
-    <img src="../assets/mc_logo.png" alt="">
-    <span>움직이는교회</span>
-  </div>
-</header>
-
-<main>
-  <!-- ════ 1. 환영 (참여 카드 1쪽) ════ -->
-  <section class="hello">
-    <div class="wrap rv">
-      <div class="tag">새이웃 만남</div>
-      <h1>새이웃 여러분,<br><em>환영합니다.</em></h1>
-      <p>움직이는교회에 함께해 주셔서 감사합니다. 우리는 새로운 만남을 소중히 여기며, 서로의 삶을 알아가고 함께 믿음의 길을 걸어가기를 소망합니다.</p>
-      <p>편안한 마음으로 새이웃 만남에 참여해 주시기 바랍니다.</p>
-      <a class="btn-jump" href="#join">
-        참여 카드 작성하기
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      </a>
+<div class="wrap">
+  <header class="top">
+    <div class="row">
+      <span class="lh"><img class="tlogo" src="img/logo.png" alt="움직이는교회" width="200" height="200">새이웃 만남</span>
+      <a href="#join">참여 카드</a>
     </div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </header>
+
+  <main>
+  <!-- ════ 1. 환영 (참여 카드 1쪽) ════ -->
+  <section class="hello" style="padding-top:0">
+    <div class="cover">
+      <img class="logo" src="img/logo.png" alt="움직이는교회" width="200" height="200">
+      <h1>새이웃 여러분,<br>환영합니다.</h1>
+      <div class="sub">움직이는교회 새이웃 만남</div>
+      <div class="mc"><b>살아나서, 살려내는 공동체</b></div>
+    </div>
+    <p>움직이는교회에 함께해 주셔서 감사합니다. 우리는 새로운 만남을 소중히 여기며, 서로의 삶을 알아가고 함께 믿음의 길을 걸어가기를 소망합니다.</p>
+    <p>편안한 마음으로 새이웃 만남에 참여해 주시기 바랍니다.</p>
+    <a class="btn jump" href="#join">참여 카드 작성하기</a>
+    <figure class="photo"><img src="img/unyang-12.jpg" alt="Welcome 띠를 두르고 새로 온 이웃을 맞이하는 성도들" width="1600" height="1066" decoding="async"></figure>
   </section>
 
   <!-- ════ 2. 교회 소개 (참여 카드 2쪽) ════ -->
-  <section class="about">
-    <div class="wrap rv">
-      <div class="eyebrow">움직이는교회</div>
-      <h2>살아나서, 살려내는 공동체</h2>
-      <p class="sub">건물이 아니라 사람으로 시작한 교회입니다. 이제 김포 운양동에서 이웃을 향해 열린 환대의 공간, Moving Village를 함께 세워 가고 있습니다.</p>
-
-      <div class="about-card">
-        <!-- TODO(담당 교역자 확인): 공식 DNA·비전 문구로 교체 -->
-        <div class="kicker">우리가 소망하는 것</div>
-        <p>회복된 공동체가 도시로 흘러, 김포의 일상 속 가정과 청년, 외국인 이웃에게 닿는 것. 새로운 이웃을 만나고, 서로를 알아가며, 함께 믿음의 길을 걷는 공동체가 되기를 소망합니다.</p>
-        <div class="facts">
-          <!-- 출처: wiki/pages/02-worship/current-worship.md (2026-10~ 시간표, 2026-11-23 확인) -->
-          <div class="fact"><b>주일 예배</b><span>오전 11시 — 1부 P&amp;B, KIDS<br>오전 11시 30분 — YOUTH<br>오후 2시 — 2부 Moving Worship</span></div>
-          <!-- TODO(담당 교역자 확인): SC 소개 문구 -->
-          <div class="fact"><b>SC</b><span>삶을 나누는 작은 공동체입니다. 새이웃 만남을 마친 뒤 원하시는 분께 소개해 드립니다.</span></div>
-          <div class="fact"><b>장소</b><span>경기도 김포시 모담공원로 151</span></div>
-        </div>
-      </div>
+  <section class="about rv">
+    <div class="label"><span class="n">01</span>움직이는교회</div>
+    <h2>건물이 아니라 사람으로 시작한 교회</h2>
+    <p>이제 김포 운양동에서 이웃을 향해 열린 환대의 공간, <strong>Moving Village</strong>를 함께 세워 가고 있습니다.</p>
+    <!-- TODO(담당 교역자 확인): 공식 DNA·비전 문구로 교체 -->
+    <p>회복된 공동체가 도시로 흘러, 김포의 일상 속 가정과 청년, 외국인 이웃에게 닿기를 소망합니다. 새로운 이웃을 만나고, 서로를 알아가며, 함께 믿음의 길을 걷는 공동체가 되기를 바랍니다.</p>
+    <div class="cards">
+      <!-- 출처: wiki/pages/02-worship/current-worship.md (2026-10~ 시간표, 2026-11-23 확인) -->
+      <div class="card"><div class="k">주일 예배</div><div class="t"><span>오전 11시 <small>1부 P&amp;B, KIDS</small></span><span>오전 11시 30분 <small>YOUTH</small></span><span>오후 2시 <small>2부 Moving Worship</small></span></div></div>
+      <!-- TODO(담당 교역자 확인): SC 소개 문구 — 2027년 1~4월 SC 휴식 결정과 맞출 것 -->
+      <div class="card"><div class="k">SC</div><div class="t" style="font-size:16px;font-weight:500;color:var(--ink-soft)">삶을 나누는 작은 공동체입니다. 새이웃 만남을 마친 뒤 원하시는 분께 소개해 드립니다.</div></div>
+      <div class="card"><div class="k">장소</div><div class="t">경기도 김포시 모담공원로 151</div></div>
     </div>
+    <figure class="photo"><img src="img/unyang-01.jpg" alt="김포 운양동 모담공원로 151, 접이문을 활짝 연 움직이는교회 환대의 공간" width="1600" height="1066" loading="lazy" decoding="async"></figure>
   </section>
 
   <!-- ════ 3. 새이웃 만남 3주 미리보기 ════ -->
-  <section class="weeks-sec">
-    <div class="wrap rv">
-      <div class="eyebrow">새이웃 만남 · 3주</div>
-      <h2>담당 교역자와 3주 동안<br>서로를 알아갑니다</h2>
-      <p class="sub">한 번에 40~60분 정도이며, 시간과 방식은 참여하시는 분의 상황에 맞춰 조정합니다.</p>
-
-      <div class="weeks">
-        <div class="week">
-          <h3>환영하다</h3>
-          <q>당신을 만나 반갑습니다.</q>
-          <p>서로의 이야기를 나누며 편안하게 알아가는 시간입니다.</p>
-        </div>
-        <div class="week">
-          <h3>알아가다</h3>
-          <q>움직이는교회의 DNA를 소개합니다.</q>
-          <p>교회의 시작과 비전, 예배와 SC 이야기를 질문과 대화로 나눕니다.</p>
-        </div>
-        <div class="week">
-          <h3>연결되다</h3>
-          <q>이제 함께 걸어갑니다.</q>
-          <p>만남을 돌아보고, 원하시면 성도 등록과 SC 참여를 안내해 드립니다.</p>
-        </div>
-      </div>
-
-      <p class="note"><b>부담 갖지 않으셔도 됩니다.</b> 3주 만남에 참여한다고 교인으로 자동 등록되지 않습니다. 등록 여부는 만남을 마친 뒤 자유롭게 결정하시면 됩니다.</p>
+  <section class="weeks-sec rv">
+    <div class="label"><span class="n">02</span>새이웃 만남</div>
+    <h2>담당 교역자와 3주 동안<br>서로를 알아갑니다</h2>
+    <p>한 번에 40~60분 정도이며, 시간과 방식은 참여하시는 분의 상황에 맞춰 조정합니다.</p>
+    <div class="weeks">
+      <div class="num"><div class="n">1주</div><div class="b"><h3>환영하다</h3><p class="say">"당신을 만나 반갑습니다."</p><p>서로의 이야기를 나누며 편안하게 알아가는 시간입니다.</p></div></div>
+      <div class="num"><div class="n">2주</div><div class="b"><h3>알아가다</h3><p class="say">"움직이는교회의 DNA를 소개합니다."</p><p>교회의 시작과 비전, 예배와 SC 이야기를 질문과 대화로 나눕니다.</p></div></div>
+      <div class="num"><div class="n">3주</div><div class="b"><h3>연결되다</h3><p class="say">"이제 함께 걸어갑니다."</p><p>만남을 돌아보고, 원하시면 성도 등록과 SC 참여를 안내해 드립니다.</p></div></div>
     </div>
+    <div class="info"><strong>부담 갖지 않으셔도 됩니다.</strong> 3주 만남에 참여한다고 교인으로 자동 등록되지 않습니다. 등록 여부는 만남을 마친 뒤 자유롭게 결정하시면 됩니다.</div>
   </section>
 
   <!-- ════ 4. 참여 카드 (참여 카드 3쪽) ════ -->
   <section id="join">
-    <div class="wrap">
-      <div class="rv">
-        <div class="eyebrow">참여 카드</div>
-        <h2>새이웃 만남 참여 신청</h2>
-        <p class="sub">이름과 연락처만 적어 주셔도 충분합니다. 담당 교역자가 카카오톡이나 문자로 인사드리고 일정과 장소를 안내해 드립니다.</p>
+    <div class="label"><span class="n">03</span>참여 카드</div>
+    <h2>새이웃 만남 참여 신청</h2>
+    <p>이름과 연락처만 적어 주셔도 충분합니다. 담당 교역자가 카카오톡이나 문자로 인사드리고 일정과 장소를 안내해 드립니다.</p>
+
+    <form id="form" novalidate>
+      <div class="field" data-field="name">
+        <label for="f-name">이름<span class="req">필수</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name" maxlength="30" required aria-describedby="m-name" placeholder="홍길동">
+        <div class="msg" id="m-name">이름을 적어 주세요.</div>
       </div>
 
-      <div class="card rv">
-        <form id="form" novalidate>
-          <div class="field" data-field="name">
-            <label for="f-name">이름<span class="req" aria-hidden="true">*</span></label>
-            <input id="f-name" name="name" type="text" autocomplete="name" maxlength="30" required aria-describedby="m-name" placeholder="홍길동">
-            <div class="msg" id="m-name">이름을 적어 주세요.</div>
+      <div class="field" data-field="phone">
+        <label for="f-phone">연락처<span class="req">필수</span></label>
+        <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" required aria-describedby="m-phone" placeholder="010-0000-0000">
+        <div class="msg" id="m-phone">휴대폰 번호를 확인해 주세요. (예: 010-1234-5678)</div>
+      </div>
+
+      <details class="more">
+        <summary>
+          <span>조금 더 알려주세요<small>선택 항목입니다. 첫 만남에 도움이 됩니다.</small></span>
+          <span class="tg" aria-hidden="true"></span>
+        </summary>
+
+        <div class="field">
+          <div class="lbl" id="l-contactMethod">편한 연락 방법</div>
+          <div class="opts" role="radiogroup" aria-labelledby="l-contactMethod">
+            <label class="opt"><input type="radio" name="contactMethod" value="카카오톡"><span>카카오톡</span></label>
+            <label class="opt"><input type="radio" name="contactMethod" value="문자"><span>문자</span></label>
+            <label class="opt"><input type="radio" name="contactMethod" value="전화"><span>전화</span></label>
           </div>
-
-          <div class="field" data-field="phone">
-            <label for="f-phone">연락처<span class="req" aria-hidden="true">*</span></label>
-            <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" required aria-describedby="m-phone" placeholder="010-0000-0000">
-            <div class="msg" id="m-phone">휴대폰 번호를 확인해 주세요. (예: 010-1234-5678)</div>
-          </div>
-
-          <details class="more">
-            <summary>
-              <span>조금 더 알려주세요 <span class="opt">(선택)</span>
-                <small>연락 방법·시간, 알게 된 경로 등 · 첫 만남에 도움이 됩니다</small></span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </summary>
-            <div class="inner">
-              <div class="field">
-                <div class="lbl" id="l-contactMethod">편한 연락 방법</div>
-                <div class="chips" role="radiogroup" aria-labelledby="l-contactMethod">
-                  <label><input type="radio" name="contactMethod" value="카카오톡"><span>카카오톡</span></label>
-                  <label><input type="radio" name="contactMethod" value="문자"><span>문자</span></label>
-                  <label><input type="radio" name="contactMethod" value="전화"><span>전화</span></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="lbl" id="l-contactTime">연락 가능한 시간</div>
-                <div class="chips" role="radiogroup" aria-labelledby="l-contactTime">
-                  <label><input type="radio" name="contactTime" value="평일 낮"><span>평일 낮</span></label>
-                  <label><input type="radio" name="contactTime" value="평일 저녁"><span>평일 저녁</span></label>
-                  <label><input type="radio" name="contactTime" value="주말"><span>주말</span></label>
-                  <label><input type="radio" name="contactTime" value="상관없음"><span>상관없음</span></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="lbl" id="l-join">새이웃 만남 참여</div>
-                <div class="chips" role="radiogroup" aria-labelledby="l-join">
-                  <label><input type="radio" name="joinIntent" value="참여하고 싶어요"><span>참여하고 싶어요</span></label>
-                  <label><input type="radio" name="joinIntent" value="조금 더 생각해 볼게요"><span>조금 더 생각해 볼게요</span></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="lbl" id="l-source">교회를 알게 된 경로</div>
-                <div class="chips" role="radiogroup" aria-labelledby="l-source">
-                  <label><input type="radio" name="source" value="지인 소개"><span>지인 소개</span></label>
-                  <label><input type="radio" name="source" value="인터넷·SNS"><span>인터넷·SNS</span></label>
-                  <label><input type="radio" name="source" value="지나가다"><span>지나가다</span></label>
-                  <label><input type="radio" name="source" value="기타"><span>기타</span></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <div class="lbl" id="l-age">연령대</div>
-                <div class="chips" role="radiogroup" aria-labelledby="l-age">
-                  <label><input type="radio" name="ageGroup" value="청년(20~30대)"><span>청년(20~30대)</span></label>
-                  <label><input type="radio" name="ageGroup" value="장년(40~50대)"><span>장년(40~50대)</span></label>
-                  <label><input type="radio" name="ageGroup" value="60대 이상"><span>60대 이상</span></label>
-                  <label><input type="radio" name="ageGroup" value="기타"><span>기타</span></label>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="f-companions">함께 오신 가족·동반인</label>
-                <input id="f-companions" name="companions" type="text" maxlength="100" placeholder="예: 배우자, 자녀 2명">
-              </div>
-
-              <div class="field">
-                <label for="f-hope">교회에 기대하거나 궁금한 점</label>
-                <textarea id="f-hope" name="hope" maxlength="1000" placeholder="자유롭게 적어 주세요."></textarea>
-              </div>
-            </div>
-          </details>
-
-          <!-- 봇 차단용 숨김 칸 — 사람은 보지 못합니다 -->
-          <div class="hp" aria-hidden="true">
-            <label for="f-website">웹사이트</label>
-            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
-
-          <div class="consent">
-            <dl>
-              <dt>수집 목적</dt><dd>새이웃 만남 안내 및 담당 교역자 연락</dd>
-              <dt>수집 항목</dt><dd>이름, 연락처 (선택: 연락 방법·시간, 참여 희망, 알게 된 경로, 연령대, 동반인, 기대하는 점)</dd>
-              <dt>보유 기간</dt><dd>성도 등록 시 교적으로 옮기며, 등록하지 않으시면 신청일로부터 1년 후 파기합니다.</dd>
-              <dt>문의</dt><dd>조관준 목사 · <a href="tel:010-2855-4091">010-2855-4091</a></dd>
-            </dl>
-            <p class="fine">동의하지 않으실 수 있으나, 동의하지 않으시면 새이웃 만남 안내를 받으실 수 없습니다.</p>
-            <label class="check">
-              <input id="f-consent" name="consent" type="checkbox" required>
-              <span>개인정보 수집·이용 및 연락에 동의합니다. <span class="req">(필수)</span></span>
-            </label>
-          </div>
-
-          <button class="btn-submit" id="submit" type="submit" disabled>참여 신청하기</button>
-          <div class="form-err" id="form-err" role="alert" aria-live="assertive"></div>
-        </form>
-
-        <!-- ════ 5. 완료 (참여 카드 4쪽) ════ -->
-        <div class="done" id="done" tabindex="-1" aria-live="polite">
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></div>
-          <h3><span id="done-name"></span>새이웃 만남에<br>참여해 주셔서 감사합니다</h3>
-          <p>앞으로 담당 교역자와 3주 동안 서로를 알아가고, 움직이는교회의 비전과 공동체를 살펴보는 시간을 갖게 됩니다.</p>
-          <p>카카오톡 또는 문자로 일정과 장소를 안내해 드리겠습니다. 편안한 마음으로 함께해 주시기 바랍니다.</p>
         </div>
+
+        <div class="field">
+          <div class="lbl" id="l-contactTime">연락 가능한 시간</div>
+          <div class="opts" role="radiogroup" aria-labelledby="l-contactTime">
+            <label class="opt"><input type="radio" name="contactTime" value="평일 낮"><span>평일 낮</span></label>
+            <label class="opt"><input type="radio" name="contactTime" value="평일 저녁"><span>평일 저녁</span></label>
+            <label class="opt"><input type="radio" name="contactTime" value="주말"><span>주말</span></label>
+            <label class="opt"><input type="radio" name="contactTime" value="상관없음"><span>상관없음</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="lbl" id="l-join">새이웃 만남 참여</div>
+          <div class="opts" role="radiogroup" aria-labelledby="l-join">
+            <label class="opt"><input type="radio" name="joinIntent" value="참여하고 싶어요"><span>참여하고 싶어요</span></label>
+            <label class="opt"><input type="radio" name="joinIntent" value="조금 더 생각해 볼게요"><span>조금 더 생각해 볼게요</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="lbl" id="l-source">교회를 알게 된 경로</div>
+          <div class="opts" role="radiogroup" aria-labelledby="l-source">
+            <label class="opt"><input type="radio" name="source" value="지인 소개"><span>지인 소개</span></label>
+            <label class="opt"><input type="radio" name="source" value="인터넷·SNS"><span>인터넷·SNS</span></label>
+            <label class="opt"><input type="radio" name="source" value="지나가다"><span>지나가다</span></label>
+            <label class="opt"><input type="radio" name="source" value="기타"><span>기타</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="lbl" id="l-age">연령대</div>
+          <div class="opts" role="radiogroup" aria-labelledby="l-age">
+            <label class="opt"><input type="radio" name="ageGroup" value="청년(20~30대)"><span>청년(20~30대)</span></label>
+            <label class="opt"><input type="radio" name="ageGroup" value="장년(40~50대)"><span>장년(40~50대)</span></label>
+            <label class="opt"><input type="radio" name="ageGroup" value="60대 이상"><span>60대 이상</span></label>
+            <label class="opt"><input type="radio" name="ageGroup" value="기타"><span>기타</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-companions">함께 오신 가족·동반인</label>
+          <input id="f-companions" name="companions" type="text" maxlength="100" placeholder="예: 배우자, 자녀 2명">
+        </div>
+
+        <div class="field">
+          <label for="f-hope">교회에 기대하거나 궁금한 점</label>
+          <textarea id="f-hope" name="hope" maxlength="1000" placeholder="자유롭게 적어 주세요."></textarea>
+        </div>
+      </details>
+
+      <!-- 봇 차단용 숨김 칸 — 사람은 보지 못합니다 -->
+      <div class="hp" aria-hidden="true">
+        <label for="f-website">웹사이트</label>
+        <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
+
+      <div class="consent">
+        <dl>
+          <dt>수집 목적</dt><dd>새이웃 만남 안내 및 담당 교역자 연락</dd>
+          <dt>수집 항목</dt><dd>이름, 연락처 (선택: 연락 방법·시간, 참여 희망, 알게 된 경로, 연령대, 동반인, 기대하는 점)</dd>
+          <dt>보유 기간</dt><dd>성도 등록 시 교적으로 옮기며, 등록하지 않으시면 신청일로부터 1년 후 파기합니다.</dd>
+          <dt>문의</dt><dd>조관준 목사 <a href="tel:010-2855-4091">010-2855-4091</a></dd>
+        </dl>
+        <p class="fine">동의하지 않으실 수 있으나, 동의하지 않으시면 새이웃 만남 안내를 받으실 수 없습니다.</p>
+        <label class="opt">
+          <input id="f-consent" name="consent" type="checkbox" required>
+          <span>개인정보 수집·이용 및 연락에 동의합니다.<span class="req">필수</span></span>
+        </label>
+      </div>
+
+      <button class="btn seed" id="submit" type="submit" disabled>참여 신청하기</button>
+      <div class="form-err" id="form-err" role="alert" aria-live="assertive"></div>
+    </form>
+
+    <!-- ════ 5. 완료 (참여 카드 4쪽) ════ -->
+    <div class="done" id="done" tabindex="-1" aria-live="polite">
+      <h2><span id="done-name"></span>새이웃 만남에<br>참여해 주셔서 감사합니다</h2>
+      <p>앞으로 담당 교역자와 3주 동안 서로를 알아가고, 움직이는교회의 비전과 공동체를 살펴보는 시간을 갖게 됩니다.</p>
+      <p>카카오톡 또는 문자로 일정과 장소를 안내해 드리겠습니다. 편안한 마음으로 함께해 주시기 바랍니다.</p>
+      <figure class="photo"><img src="img/unyang-03.jpg" alt="운양동 성전에서 Moving Worship 주일 예배로 함께 모인 성도들" width="1600" height="1066" loading="lazy" decoding="async"></figure>
+      <div class="seal"><img src="img/logo.png" alt="움직이는교회" width="56" height="56" loading="lazy" decoding="async"></div>
     </div>
   </section>
-</main>
+  </main>
 
-<footer>
-  <div class="wrap">
-    <div class="contact">문의 · 조관준 목사 · <a href="tel:010-2855-4091">010-2855-4091</a></div>
-    <a class="home" href="../">움직이는교회 Moving Village 둘러보기 →</a>
-    <div class="addr">경기도 김포시 모담공원로 151 · 움직이는교회</div>
-  </div>
-</footer>
+  <footer class="foot">
+    문의 조관준 목사 <a href="tel:010-2855-4091">010-2855-4091</a><br>
+    경기도 김포시 모담공원로 151 움직이는교회<br>
+    <a href="../">Moving Village 둘러보기</a>
+  </footer>
+</div>
 
 <script>
   /* ── 설정 ──────────────────────────────────────────────
@@ -442,6 +349,16 @@
     if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
   }), { threshold: .1 });
   document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+
+  // 러닝헤드 진행선: 읽은 만큼 차고, 참여 카드에 닿으면 씨앗색으로
+  const fill = $('#fill'), joinSec = $('#join');
+  const onScroll = () => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    fill.style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + '%';
+    document.body.classList.toggle('at-form', joinSec.getBoundingClientRect().top < innerHeight * .5);
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
   // 휴대폰 번호 자동 하이픈
   const fmtPhone = (v) => {
