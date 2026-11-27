@@ -101,3 +101,18 @@ Vercel이 자동으로 다시 배포하면 바로 동작합니다. 휴대폰으�
 | `TPL_STAFF` / `TPL_WELCOME` | 승인된 템플릿 ID |
 
 알림톡 발송에 실패해도(카카오톡 미사용자 등) 문자로 대신 보내지 않습니다. 결과는 시트의 `알림 결과` 열에 남습니다.
+
+---
+
+## 운영본 정보와 clasp로 코드 반영하기
+
+- 운영 시트·스크립트는 givenkim723 계정 소유입니다(2026-11-27 생성). 스크립트 ID와 시트 ID는 [`.clasp.json`](../.clasp.json)에 있습니다.
+- `Code.gs`를 고친 뒤에는 레포 루트에서 아래처럼 반영합니다. 배포 ID를 지정해 덮어써야 웹앱 URL이 그대로 유지됩니다.
+
+```sh
+npx @google/clasp@3.4.1 login        # 처음 한 번
+npx @google/clasp@3.4.1 push -f
+npx @google/clasp@3.4.1 update-deployment AKfycbze2jqNsqQu79NEZCp7Kt4j3o9GejFpAdAt3FeJIpHpY7S5u9oZWYnBaKYRQIXi4y30yA -d "설명"
+```
+
+- 웹앱 설정(실행 사용자: 나, 접근: 모든 사용자)은 [`apps-script/appsscript.json`](../apps-script/appsscript.json)의 `webapp` 항목에 있습니다.
