@@ -85,13 +85,14 @@
   .dna li .n { flex:0 0 26px; font-size:14px; font-weight:700; color:var(--water-ink); font-variant-numeric:tabular-nums; padding-top:2px; }
 
   h2 + h3.part { margin-top:4px; }
-  .cards + .cards { margin-top:28px; }
   .tl { list-style:none; padding:0; margin:16px 0 0; border-top:1px solid var(--rule); }
   .tl li { padding:20px 0; border-bottom:1px solid var(--rule); }
   .tl .k { font-size:18px; font-weight:700; color:var(--ink); line-height:1.4; word-break:keep-all; }
   .tl .date { font-size:14px; color:var(--mute); margin-top:2px; font-variant-numeric:tabular-nums; }
   .tl .m { font-size:15.5px; color:var(--water-ink); font-weight:500; margin:8px 0 6px; word-break:keep-all; text-wrap:balance; }
   .tl p { margin:0; font-size:15.5px; line-height:1.75; }
+  .tl .photo { margin:18px -20px 0; }
+  .tl li:last-child { border-bottom:0; padding-bottom:0; }
 
   /* 3주 */
   .num { display:flex; gap:14px; padding:20px 0; border-bottom:1px solid var(--rule); }
@@ -216,23 +217,14 @@
       <div class="card"><div class="t">그리스도의 몸</div><div class="d">고전 12:27</div></div>
       <div class="card"><div class="t">왕 같은 제사장</div><div class="d">거룩한 나라, 하나님의 소유된 백성 · 벧전 2:9</div></div>
     </div>
-    <div class="cards">
-      <!-- 출처: wiki/pages/02-worship/current-worship.md (2026-10~ 시간표, 2026-11-23 확인) -->
-      <div class="card"><div class="k">주일 예배</div><div class="t"><span>오전 11시 <small>1부 P&amp;B, KIDS</small></span><span>오전 11시 30분 <small>YOUTH</small></span><span>오후 2시 <small>2부 Moving Worship</small></span></div></div>
-      <!-- TODO(담당 교역자 확인): SC 소개 문구 — 2027년 1~4월 SC 휴식 결정과 맞출 것 -->
-      <div class="card"><div class="k">SC</div><div class="t" style="font-size:16px;font-weight:500;color:var(--ink-soft)">삶을 나누는 작은 공동체입니다. 뉴패밀리 테이블을 마친 뒤 원하시는 분께 소개해 드립니다.</div></div>
-      <div class="card"><div class="k">장소</div><div class="t">경기도 김포시 모담공원로 151</div></div>
-    </div>
 
     <h3 class="part">걸어온 길</h3>
     <p>세 번의 개척, 하나의 부르심입니다.</p>
     <ol class="tl">
-      <li><div class="k">MC 1.0 서울 홍대</div><div class="date">2018.6 – 2022.2</div><div class="m">"교회로 살면, 교회는 개척된다"</div><p>찾아가는 교회. 예배당 없이 거리의 청년들에게 복음을 들고 나아갔습니다.</p></li>
-      <li><div class="k">MC 2.0 김포 풍무동</div><div class="date">2022.3 – 2026.8</div><div class="m">"건강한 교회로 살면, 건강한 교회는 개척된다"</div><p>회복하는 교회. 지친 가정과 청년들이 복음 안에서 회복되었습니다.</p></li>
-      <li><div class="k">MC 3.0 김포 운양동</div><div class="date">2026.9 –</div><div class="m">"환대의 공간을 개척하라"</div><p>흘러가는 교회. 회복의 강이 환대를 통해 도시로 흘러가도록, 이웃을 향해 열린 환대의 공간 <strong>Moving Village</strong>를 함께 세워 가고 있습니다.</p></li>
+      <li><div class="k">MC 1.0 서울 홍대</div><div class="date">2018.6 – 2022.2</div><div class="m">"교회로 살면, 교회는 개척된다"</div><p>찾아가는 교회. 예배당 없이 거리의 청년들에게 복음을 들고 나아갔습니다.</p><figure class="photo"><img src="img/story-hongdae.jpeg" alt="홍대 거리에서 함께 둘러앉아 음식을 나누며 교제하는 성도들" width="1600" height="889" loading="lazy" decoding="async"></figure></li>
+      <li><div class="k">MC 2.0 김포 풍무동</div><div class="date">2022.3 – 2026.8</div><div class="m">"건강한 교회로 살면, 건강한 교회는 개척된다"</div><p>회복하는 교회. 지친 가정과 청년들이 복음 안에서 회복되었습니다.</p><figure class="photo"><img src="img/gal-09.jpg" alt="여러 가정과 온 세대가 함께 모인 움직이는교회 공동체" width="1280" height="831" loading="lazy" decoding="async"></figure></li>
+      <li><div class="k">MC 3.0 김포 운양동</div><div class="date">2026.9 –</div><div class="m">"환대의 공간을 개척하라"</div><p>흘러가는 교회. 회복의 강이 환대를 통해 도시로 흘러가도록, 이웃을 향해 열린 환대의 공간 <strong>Moving Village</strong>를 함께 세워 가고 있습니다.</p><figure class="photo"><img src="img/unyang-01.jpg" alt="김포 운양동 모담공원로 151, 접이문을 활짝 연 움직이는교회 환대의 공간" width="1600" height="1066" loading="lazy" decoding="async"></figure></li>
     </ol>
-    <figure class="photo"><img src="img/unyang-01.jpg" alt="김포 운양동 모담공원로 151, 접이문을 활짝 연 움직이는교회 환대의 공간" width="1600" height="1066" loading="lazy" decoding="async"></figure>
-
     <h3 class="part">DNA</h3>
     <figure class="photo"><img src="img/dna-tree.jpg" alt="씨앗과 물의 심볼이 자라 열매 맺는 나무가 되는 그림 — 교회로 살면, 교회는 개척된다" width="868" height="356" loading="lazy" decoding="async"><figcaption>움직이는교회 DNA 심볼 - 씨앗, 나무</figcaption></figure>
     <ol class="dna">
@@ -243,6 +235,15 @@
       <li><span class="n">05</span>서로 사랑함으로 하나님 나라의 환대를 드러내는 교회</li>
       <li><span class="n">06</span>환대의 공간을 개척하는 교회</li>
     </ol>
+
+    <h3 class="part">함께 모이는 시간과 자리</h3>
+    <div class="cards">
+      <!-- 출처: wiki/pages/02-worship/current-worship.md (2026-10~ 시간표, 2026-11-23 확인) -->
+      <div class="card"><div class="k">주일 예배</div><div class="t"><span>오전 11시 <small>1부 P&amp;B, KIDS</small></span><span>오전 11시 30분 <small>YOUTH</small></span><span>오후 2시 <small>2부 Moving Worship</small></span></div></div>
+      <!-- TODO(담당 교역자 확인): SC 소개 문구 — 2027년 1~4월 SC 휴식 결정과 맞출 것 -->
+      <div class="card"><div class="k">SC</div><div class="t" style="font-size:16px;font-weight:500;color:var(--ink-soft)">삶을 나누는 작은 공동체입니다. 뉴패밀리 테이블을 마친 뒤 원하시는 분께 소개해 드립니다.</div></div>
+      <div class="card"><div class="k">장소</div><div class="t">경기도 김포시 모담공원로 151</div></div>
+    </div>
   </section>
 
   <!-- ════ 3. 뉴패밀리 테이블 3주 미리보기 ════ -->
