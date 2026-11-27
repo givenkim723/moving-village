@@ -1,5 +1,5 @@
 /**
- * 움직이는교회 — 새이웃 참여 신청 수신 (Google Apps Script)
+ * 움직이는교회 — 뉴패밀리 참여 신청 수신 (Google Apps Script)
  *
  * 하는 일
  *  1. /newcomer 페이지에서 보낸 신청을 검증해 시트에 한 줄 추가
@@ -21,7 +21,7 @@
  *  TPL_WELCOME             신청자용 알림톡 템플릿 ID
  */
 
-const SHEET_NAME = '새이웃 신청';
+const SHEET_NAME = '뉴패밀리 신청';
 const RETENTION_DAYS = 365;
 const REGISTERED_STATUS = '성도 등록';
 
@@ -135,7 +135,17 @@ function appendRow_(d) {
 
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  return ss.getSheetByName(SHEET_NAME) || setupSheet_(ss);
+  return ss.getSheetByName(SHEET_NAME) || renameLegacy_(ss) || setupSheet_(ss);
+}
+
+// 2026-11-27 명칭 변경(새이웃 → 뉴패밀리): 옛 탭이 있으면 이름만 바꿔 데이터를 그대로 쓴다
+const LEGACY_SHEET_NAMES = ['새이웃 신청'];
+function renameLegacy_(ss) {
+  for (const n of LEGACY_SHEET_NAMES) {
+    const sh = ss.getSheetByName(n);
+    if (sh) return sh.setName(SHEET_NAME);
+  }
+  return null;
 }
 
 /* ════════════════════ 알림 ════════════════════ */
@@ -145,7 +155,7 @@ function notifyEmail_(d) {
   if (!to) return '';
   try {
     const lines = [
-      '새이웃 만남 참여 신청이 접수되었습니다.',
+      '뉴패밀리 테이블 참여 신청이 접수되었습니다.',
       '',
       '이름: ' + d.name,
       '연락처: ' + d.phone,
@@ -161,7 +171,7 @@ function notifyEmail_(d) {
     ].filter((l) => l !== null);
     MailApp.sendEmail({
       to,
-      subject: '[새이웃] ' + d.name + '님 참여 신청',
+      subject: '[뉴패밀리] ' + d.name + '님 참여 신청',
       body: lines.join('\n'),
     });
     return '메일 발송';
@@ -254,7 +264,9 @@ function purgeExpired() {
 
 /** 편집기에서 이 함수를 선택해 한 번 실행하세요. 시트·드롭다운·파기 트리거를 만듭니다. */
 function setup() {
-  setupSheet_(SpreadsheetApp.getActiveSpreadsheet());
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss.getSheetByName(SHEET_NAME)) renameLegacy_(ss);
+  setupSheet_(ss);
   ScriptApp.getProjectTriggers()
     .filter((t) => t.getHandlerFunction() === 'purgeExpired')
     .forEach((t) => ScriptApp.deleteTrigger(t));
