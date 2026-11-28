@@ -155,7 +155,7 @@ function notifyEmail_(d) {
   if (!to) return '';
   try {
     const lines = [
-      '뉴패밀리 테이블 참여 신청이 접수되었습니다.',
+      'Family Table 참여 신청이 접수되었습니다.',
       '',
       '이름: ' + d.name,
       '연락처: ' + d.phone,
@@ -171,7 +171,7 @@ function notifyEmail_(d) {
     ].filter((l) => l !== null);
     MailApp.sendEmail({
       to,
-      subject: '[뉴패밀리] ' + d.name + '님 참여 신청',
+      subject: '[Family Table] ' + d.name + '님 참여 신청',
       body: lines.join('\n'),
     });
     return '메일 발송';
