@@ -127,6 +127,7 @@
   input[type=text], input[type=tel], textarea { width:100%; font:inherit; font-size:17px; padding:10px 0; border:0; border-bottom:1.5px solid var(--ink); border-radius:0; background:none; color:var(--ink); -webkit-appearance:none; appearance:none; }
   input[type=text]:focus, input[type=tel]:focus { outline:none; border-bottom-color:var(--seed); box-shadow:0 1px 0 var(--seed); }
   .field.invalid input { border-bottom-color:var(--err); }
+  input.short { max-width:180px; }
   input::placeholder, textarea::placeholder { color:var(--mute); }
   textarea { min-height:120px; resize:vertical; line-height:1.7; border:1px solid var(--rule); padding:12px; font-size:16px; }
   textarea:focus { outline:none; border-color:var(--seed); box-shadow:inset 0 0 0 1px var(--seed); }
@@ -324,14 +325,10 @@
           </div>
         </div>
 
-        <div class="field">
-          <div class="lbl" id="l-age">연령대</div>
-          <div class="opts" role="radiogroup" aria-labelledby="l-age">
-            <label class="opt"><input type="radio" name="ageGroup" value="청년(20~30대)"><span>청년(20~30대)</span></label>
-            <label class="opt"><input type="radio" name="ageGroup" value="장년(40~50대)"><span>장년(40~50대)</span></label>
-            <label class="opt"><input type="radio" name="ageGroup" value="60대 이상"><span>60대 이상</span></label>
-            <label class="opt"><input type="radio" name="ageGroup" value="기타"><span>기타</span></label>
-          </div>
+        <div class="field" data-field="birthYear">
+          <label for="f-birth">출생 연도</label>
+          <input id="f-birth" class="short" name="birthYear" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="bday-year" aria-describedby="m-birth" placeholder="예: 1990">
+          <div class="msg" id="m-birth">태어난 해를 숫자 네 자리로 적어 주세요. (예: 1990)</div>
         </div>
 
         <div class="field">
@@ -354,7 +351,7 @@
       <div class="consent">
         <dl>
           <dt>수집 목적</dt><dd>Family Table 안내 및 담당 교역자 연락</dd>
-          <dt>수집 항목</dt><dd>이름, 연락처 (선택: 연락 방법·시간, 참여 희망, 알게 된 경로, 연령대, 동반인, 기대하는 점)</dd>
+          <dt>수집 항목</dt><dd>이름, 연락처 (선택: 연락 방법·시간, 참여 희망, 알게 된 경로, 출생 연도, 동반인, 기대하는 점)</dd>
           <dt>보유 기간</dt><dd>성도 등록 시 교적으로 옮기며, 등록하지 않으시면 신청일로부터 1년 후 파기합니다.</dd>
           <dt>문의</dt><dd>조관준 목사 <a href="tel:010-2855-4091">010-2855-4091</a></dd>
         </dl>
@@ -402,7 +399,7 @@
 
   const $ = (s) => document.querySelector(s);
   const form = $('#form'), errBox = $('#form-err');
-  const nameEl = $('#f-name'), phoneEl = $('#f-phone'), consentEl = $('#f-consent');
+  const nameEl = $('#f-name'), phoneEl = $('#f-phone'), consentEl = $('#f-consent'), birthEl = $('#f-birth');
   const prevBtn = $('#prev'), nextBtn = $('#next');
   const startedAt = Date.now();
   const src = new URLSearchParams(location.search).get('src') || '';
@@ -458,6 +455,12 @@
   };
   const validPhone = (v) => /^01[016789]\d{7,8}$/.test(v.replace(/\D/g, ''));
   phoneEl.addEventListener('input', () => { phoneEl.value = fmtPhone(phoneEl.value); clearInvalid(phoneEl); });
+  // 출생 연도: 선택 항목. 적었다면 1920년~올해의 네 자리 숫자
+  const MIN_BIRTH_YEAR = 1920, THIS_YEAR = new Date().getFullYear();
+  const validBirth = (v) => v === '' || (/^\d{4}$/.test(v) && +v >= MIN_BIRTH_YEAR && +v <= THIS_YEAR);
+  $('#m-birth').textContent = '태어난 해를 숫자 네 자리로 적어 주세요. (' + MIN_BIRTH_YEAR + '~' + THIS_YEAR + ', 예: 1990)';
+  birthEl.addEventListener('input', () => { birthEl.value = birthEl.value.replace(/\D/g, '').slice(0, 4); clearInvalid(birthEl); });
+  birthEl.addEventListener('blur', () => setInvalid(birthEl, !validBirth(birthEl.value.trim())));
   nameEl.addEventListener('input', () => clearInvalid(nameEl));
 
   function setInvalid(el, on) {
@@ -484,8 +487,11 @@
     const okPhone = validPhone(phoneEl.value);
     setInvalid(nameEl, !okName);
     setInvalid(phoneEl, !okPhone);
-    if (!okName || !okPhone) {
-      const bad = okName ? phoneEl : nameEl;
+    const okBirth = validBirth(birthEl.value.trim());
+    setInvalid(birthEl, !okBirth);
+    if (!okBirth) $('details.more').open = true;   // 접힌 선택 항목 안의 오류도 보이게
+    if (!okName || !okPhone || !okBirth) {
+      const bad = !okName ? nameEl : !okPhone ? phoneEl : birthEl;
       bad.focus();
       bad.closest('.field').scrollIntoView({ block: 'center' });
       return;
@@ -502,7 +508,7 @@
       contactTime: fd.get('contactTime') || '',
       joinIntent: fd.get('joinIntent') || '',
       source: fd.get('source') || '',
-      ageGroup: fd.get('ageGroup') || '',
+      birthYear: birthEl.value.trim(),
       companions: (fd.get('companions') || '').trim(),
       hope: (fd.get('hope') || '').trim(),
       consent: true,

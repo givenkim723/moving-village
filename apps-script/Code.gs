@@ -29,7 +29,7 @@ const STATUSES = ['신청', '연락함', '1주차', '2주차', '3주차', '성�
 
 const HEADERS = [
   '신청일시', '이름', '연락처', '선호 연락 방법', '연락 가능 시간', '참여 희망',
-  '알게 된 경로', '연령대', '동반인', '기대·궁금한 점', '동의 일시', '유입',
+  '알게 된 경로', '출생 연도', '동반인', '기대·궁금한 점', '동의 일시', '유입',
   '진행 상태', '담당 교역자', '메모', '파기 예정일', '알림 결과',
 ];
 const COL = Object.fromEntries(HEADERS.map((h, i) => [h, i + 1]));
@@ -39,7 +39,6 @@ const CHOICES = {
   contactTime: ['평일 낮', '평일 저녁', '주말', '상관없음'],
   joinIntent: ['참여하고 싶어요', '조금 더 생각해 볼게요'],
   source: ['지인 소개', '인터넷·SNS', '지나가다', '기타'],
-  ageGroup: ['청년(20~30대)', '장년(40~50대)', '60대 이상', '기타'],
 };
 
 /* ════════════════════ 웹앱 진입점 ════════════════════ */
@@ -103,11 +102,22 @@ function validate_(b) {
     contactTime: pick(b.contactTime, CHOICES.contactTime),
     joinIntent: pick(b.joinIntent, CHOICES.joinIntent),
     source: pick(b.source, CHOICES.source),
-    ageGroup: pick(b.ageGroup, CHOICES.ageGroup),
+    birthYear: birthYear_(b.birthYear),
     companions: str(b.companions, 100),
     hope: str(b.hope, 1000),
     src: str(b.src, 30).replace(/[^\w-]/g, ''),
   };
+}
+
+// 출생 연도(선택): 1920년~올해의 네 자리 숫자만 받는다. 페이지와 같은 기준
+function birthYear_(v) {
+  const s = String(v == null ? '' : v).trim();
+  if (!s) return '';
+  const y = Number(s);
+  if (!/^\d{4}$/.test(s) || y < 1920 || y > new Date().getFullYear()) {
+    const e = new Error('birth_year_invalid'); e.userMessage = 'birth_year_invalid'; throw e;
+  }
+  return s;
 }
 
 function formatPhone_(d) {
@@ -127,7 +137,7 @@ function appendRow_(d) {
   const purge = new Date(now.getTime() + RETENTION_DAYS * 864e5);
   sh.appendRow([
     now, safe_(d.name), d.phone, d.contactMethod, d.contactTime, d.joinIntent,
-    d.source, d.ageGroup, safe_(d.companions), safe_(d.hope), now, d.src,
+    d.source, d.birthYear, safe_(d.companions), safe_(d.hope), now, d.src,
     '신청', '', '', purge, '',
   ]);
   return sh.getLastRow();
@@ -135,7 +145,16 @@ function appendRow_(d) {
 
 function sheet_() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  return ss.getSheetByName(SHEET_NAME) || renameLegacy_(ss) || setupSheet_(ss);
+  const sh = ss.getSheetByName(SHEET_NAME) || renameLegacy_(ss) || setupSheet_(ss);
+  syncHeaders_(sh);
+  return sh;
+}
+
+// 2026-11-28 '연령대' → '출생 연도'처럼 열 이름이 바뀌면 기존 시트 머리글을 맞춘다(열 위치는 그대로)
+function syncHeaders_(sh) {
+  const range = sh.getRange(1, 1, 1, HEADERS.length);
+  const cur = range.getValues()[0];
+  if (cur.some((v, i) => v !== HEADERS[i])) range.setValues([HEADERS]);
 }
 
 // 2026-11-27 명칭 변경(새이웃 → 뉴패밀리): 옛 탭이 있으면 이름만 바꿔 데이터를 그대로 쓴다
@@ -163,7 +182,7 @@ function notifyEmail_(d) {
       d.contactTime ? '연락 가능 시간: ' + d.contactTime : null,
       d.joinIntent ? '참여 희망: ' + d.joinIntent : null,
       d.source ? '알게 된 경로: ' + d.source : null,
-      d.ageGroup ? '연령대: ' + d.ageGroup : null,
+      d.birthYear ? '출생 연도: ' + d.birthYear : null,
       d.companions ? '동반인: ' + d.companions : null,
       d.hope ? '기대·궁금한 점: ' + d.hope : null,
       '',
