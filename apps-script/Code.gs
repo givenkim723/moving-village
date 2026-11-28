@@ -1,5 +1,5 @@
 /**
- * 움직이는교회 — 뉴패밀리 참여 신청 수신 (Google Apps Script)
+ * 움직이는교회 — Family Table 참여 신청 수신 (Google Apps Script)
  *
  * 하는 일
  *  1. /newcomer 페이지에서 보낸 신청을 검증해 시트에 한 줄 추가
@@ -21,7 +21,7 @@
  *  TPL_WELCOME             신청자용 알림톡 템플릿 ID
  */
 
-const SHEET_NAME = '뉴패밀리 신청';
+const SHEET_NAME = 'Family Table 신청';
 const RETENTION_DAYS = 365;
 const REGISTERED_STATUS = '성도 등록';
 
@@ -159,8 +159,8 @@ function syncHeaders_(sh) {
   if (cur.some((v, i) => v !== HEADERS[i])) range.setValues([HEADERS]);
 }
 
-// 2026-11-27 명칭 변경(새이웃 → 뉴패밀리): 옛 탭이 있으면 이름만 바꿔 데이터를 그대로 쓴다
-const LEGACY_SHEET_NAMES = ['새이웃 신청'];
+// 명칭 변경 이력(새이웃 → 뉴패밀리 → Family Table): 옛 탭이 있으면 이름만 바꿔 데이터를 그대로 쓴다
+const LEGACY_SHEET_NAMES = ['뉴패밀리 신청', '새이웃 신청'];
 function renameLegacy_(ss) {
   for (const n of LEGACY_SHEET_NAMES) {
     const sh = ss.getSheetByName(n);

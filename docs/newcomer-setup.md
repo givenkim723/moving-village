@@ -106,7 +106,8 @@ const ENDPOINT = 'https://script.google.com/macros/s/…/exec';
 
 ## 운영본 정보와 clasp로 코드 반영하기
 
-- 운영 시트·스크립트는 givenkim723 계정 소유입니다(2026-11-27 생성). 스크립트 ID와 시트 ID는 [`.clasp.json`](../.clasp.json)에 있습니다.
+- 운영 시트·스크립트는 givenkim723 계정 소유입니다(2026-11-27 생성) 파일·탭 이름은 `Family Table 신청`(2026-11-29 변경).
+- 알림 메일(`NOTIFY_EMAIL`)은 담당자 개인 계정과 교회 공용 계정 두 곳으로 갑니다(2026-11-29). 주소는 스크립트 속성에서 확인하세요. 스크립트 ID와 시트 ID는 [`.clasp.json`](../.clasp.json)에 있습니다.
 - `Code.gs`를 고친 뒤에는 레포 루트에서 아래처럼 반영합니다. 배포 ID를 지정해 덮어써야 웹앱 URL이 그대로 유지됩니다.
 
 ```sh
