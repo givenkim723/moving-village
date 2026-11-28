@@ -91,6 +91,8 @@ function validate_(b) {
   const name = str(b.name, 30);
   const digits = String(b.phone || '').replace(/\D/g, '');
   if (!name) fail('name_required');
+  // 페이지(newcomer/index.html RULES)와 같은 기준: 2자 이상, 글자로 시작, 글자·공백·가운뎃점·하이픈만
+  if (name.length < 2 || !/^[\p{L}][\p{L} .·'-]*$/u.test(name)) fail('name_invalid');
   if (!/^01[016789]\d{7,8}$/.test(digits)) fail('phone_invalid');
   if (b.consent !== true) fail('consent_required');
 
@@ -103,7 +105,7 @@ function validate_(b) {
     joinIntent: pick(b.joinIntent, CHOICES.joinIntent),
     source: pick(b.source, CHOICES.source),
     birthYear: birthYear_(b.birthYear),
-    companions: str(b.companions, 100),
+    companions: /\p{L}/u.test(str(b.companions, 100)) ? str(b.companions, 100) : '',  // 글자 없는 값은 버림
     hope: str(b.hope, 1000),
     src: str(b.src, 30).replace(/[^\w-]/g, ''),
   };

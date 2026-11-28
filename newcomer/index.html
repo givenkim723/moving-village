@@ -128,6 +128,8 @@
   input[type=text]:focus, input[type=tel]:focus { outline:none; border-bottom-color:var(--seed); box-shadow:0 1px 0 var(--seed); }
   .field.invalid input { border-bottom-color:var(--err); }
   input.short { max-width:180px; }
+  .hint { font-size:13.5px; color:var(--mute); line-height:1.5; margin:-2px 0 6px; word-break:keep-all; }
+  .count { text-align:right; font-size:12.5px; color:var(--mute); margin-top:6px; font-variant-numeric:tabular-nums; }
   input::placeholder, textarea::placeholder { color:var(--mute); }
   textarea { min-height:120px; resize:vertical; line-height:1.7; border:1px solid var(--rule); padding:12px; font-size:16px; }
   textarea:focus { outline:none; border-color:var(--seed); box-shadow:inset 0 0 0 1px var(--seed); }
@@ -272,14 +274,16 @@
     <form id="form" novalidate>
       <div class="field" data-field="name">
         <label for="f-name">이름<span class="req">필수</span></label>
-        <input id="f-name" name="name" type="text" autocomplete="name" maxlength="30" required aria-describedby="m-name" placeholder="홍길동">
-        <div class="msg" id="m-name">이름을 적어 주세요.</div>
+        <div class="hint" id="h-name">2~30자, 글자로만 적어 주세요.</div>
+        <input id="f-name" name="name" type="text" autocomplete="name" maxlength="30" required aria-describedby="h-name m-name" placeholder="예: 홍길동">
+        <div class="msg" id="m-name" aria-live="polite"></div>
       </div>
 
       <div class="field" data-field="phone">
         <label for="f-phone">연락처<span class="req">필수</span></label>
-        <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" required aria-describedby="m-phone" placeholder="010-0000-0000">
-        <div class="msg" id="m-phone">휴대폰 번호를 확인해 주세요. (예: 010-1234-5678)</div>
+        <div class="hint" id="h-phone">휴대폰 번호. 숫자만 적으면 하이픈은 자동으로 들어갑니다.</div>
+        <input id="f-phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="13" required aria-describedby="h-phone m-phone" placeholder="예: 010-1234-5678">
+        <div class="msg" id="m-phone" aria-live="polite"></div>
       </div>
 
       <details class="more">
@@ -327,18 +331,24 @@
 
         <div class="field" data-field="birthYear">
           <label for="f-birth">출생 연도</label>
-          <input id="f-birth" class="short" name="birthYear" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="bday-year" aria-describedby="m-birth" placeholder="예: 1990">
-          <div class="msg" id="m-birth">태어난 해를 숫자 네 자리로 적어 주세요. (예: 1990)</div>
+          <div class="hint" id="h-birth">태어난 해를 숫자 네 자리로 적어 주세요.</div>
+          <input id="f-birth" class="short" name="birthYear" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="bday-year" aria-describedby="h-birth m-birth" placeholder="예: 1990">
+          <div class="msg" id="m-birth" aria-live="polite"></div>
         </div>
 
-        <div class="field">
+        <div class="field" data-field="companions">
           <label for="f-companions">함께 오신 가족·동반인</label>
-          <input id="f-companions" name="companions" type="text" maxlength="100" placeholder="예: 배우자, 자녀 2명">
+          <div class="hint" id="h-companions">관계와 인원을 적어 주세요. 혼자 오셨으면 비워 두셔도 됩니다. (100자 이내)</div>
+          <input id="f-companions" name="companions" type="text" maxlength="100" aria-describedby="h-companions m-companions" placeholder="예: 배우자, 자녀 2명(7살·4살)">
+          <div class="msg" id="m-companions" aria-live="polite"></div>
         </div>
 
-        <div class="field">
+        <div class="field" data-field="hope">
           <label for="f-hope">교회에 기대하거나 궁금한 점</label>
-          <textarea id="f-hope" name="hope" maxlength="1000" placeholder="자유롭게 적어 주세요."></textarea>
+          <div class="hint" id="h-hope">첫 만남에서 이야기 나눌 때 참고합니다. (1000자 이내)</div>
+          <textarea id="f-hope" name="hope" maxlength="1000" aria-describedby="h-hope m-hope" placeholder="예: 아이와 함께 드릴 수 있는 예배가 궁금해요. 신앙생활을 다시 시작하고 싶어요."></textarea>
+          <div class="count"><span id="hope-count">0</span> / 1000</div>
+          <div class="msg" id="m-hope" aria-live="polite"></div>
         </div>
       </details>
 
@@ -454,14 +464,38 @@
     return d.slice(0, 3) + '-' + d.slice(3, 7) + '-' + d.slice(7);
   };
   const validPhone = (v) => /^01[016789]\d{7,8}$/.test(v.replace(/\D/g, ''));
-  phoneEl.addEventListener('input', () => { phoneEl.value = fmtPhone(phoneEl.value); clearInvalid(phoneEl); });
-  // 출생 연도: 선택 항목. 적었다면 1920년~올해의 네 자리 숫자
+  /* 항목별 검사 규칙: 빈 문자열을 돌려주면 통과, 아니면 그 문장이 오류 문구.
+     서버(apps-script/Code.gs validate_)도 같은 기준으로 다시 검사한다. */
   const MIN_BIRTH_YEAR = 1920, THIS_YEAR = new Date().getFullYear();
-  const validBirth = (v) => v === '' || (/^\d{4}$/.test(v) && +v >= MIN_BIRTH_YEAR && +v <= THIS_YEAR);
-  $('#m-birth').textContent = '태어난 해를 숫자 네 자리로 적어 주세요. (' + MIN_BIRTH_YEAR + '~' + THIS_YEAR + ', 예: 1990)';
-  birthEl.addEventListener('input', () => { birthEl.value = birthEl.value.replace(/\D/g, '').slice(0, 4); clearInvalid(birthEl); });
-  birthEl.addEventListener('blur', () => setInvalid(birthEl, !validBirth(birthEl.value.trim())));
-  nameEl.addEventListener('input', () => clearInvalid(nameEl));
+  const NAME_RE = /^[\p{L}][\p{L} .·'-]*$/u;      // 글자로 시작, 글자·공백·가운뎃점·하이픈만
+  const hopeEl = $('#f-hope'), companionsEl = $('#f-companions');
+  const RULES = [
+    [nameEl, (v) => !v ? '이름을 적어 주세요.'
+      : v.length < 2 ? '이름을 2자 이상 적어 주세요.'
+      : !NAME_RE.test(v) ? '이름은 글자로만 적어 주세요. 숫자나 기호는 쓸 수 없습니다.' : ''],
+    [phoneEl, (v) => !v ? '연락처를 적어 주세요.'
+      : !validPhone(v) ? '휴대폰 번호를 확인해 주세요. (예: 010-1234-5678)' : ''],
+    [birthEl, (v) => !v ? ''
+      : !/^\d{4}$/.test(v) || +v < MIN_BIRTH_YEAR || +v > THIS_YEAR
+        ? '태어난 해를 숫자 네 자리로 적어 주세요. (' + MIN_BIRTH_YEAR + '~' + THIS_YEAR + ', 예: 1990)' : ''],
+    [companionsEl, (v) => v && !/\p{L}/u.test(v) ? '관계를 글자로 적어 주세요. (예: 배우자, 자녀 2명)' : ''],
+    [hopeEl, (v) => v.length > 1000 ? '1000자 이내로 적어 주세요.' : ''],
+  ];
+  function check([el, rule]) {
+    const err = rule(el.value.trim());
+    el.closest('.field').querySelector('.msg').textContent = err;
+    setInvalid(el, !!err);
+    return !err;
+  }
+  // 입력하는 동안에는 오류를 지우고, 칸을 벗어날 때 검사한다(빈 칸은 벗어날 때 지적하지 않음)
+  RULES.forEach((r) => {
+    const [el] = r;
+    el.addEventListener('input', () => clearInvalid(el));
+    el.addEventListener('blur', () => { if (el.value.trim()) check(r); });
+  });
+  phoneEl.addEventListener('input', () => { phoneEl.value = fmtPhone(phoneEl.value); });
+  birthEl.addEventListener('input', () => { birthEl.value = birthEl.value.replace(/\D/g, '').slice(0, 4); });
+  hopeEl.addEventListener('input', () => { $('#hope-count').textContent = hopeEl.value.length; });
 
   function setInvalid(el, on) {
     el.closest('.field').classList.toggle('invalid', on);
@@ -483,17 +517,11 @@
     errBox.classList.remove('show');
 
     const name = nameEl.value.trim();
-    const okName = name.length > 0;
-    const okPhone = validPhone(phoneEl.value);
-    setInvalid(nameEl, !okName);
-    setInvalid(phoneEl, !okPhone);
-    const okBirth = validBirth(birthEl.value.trim());
-    setInvalid(birthEl, !okBirth);
-    if (!okBirth) $('details.more').open = true;   // 접힌 선택 항목 안의 오류도 보이게
-    if (!okName || !okPhone || !okBirth) {
-      const bad = !okName ? nameEl : !okPhone ? phoneEl : birthEl;
-      bad.focus();
-      bad.closest('.field').scrollIntoView({ block: 'center' });
+    const bad = RULES.filter((r) => !check(r)).map(([el]) => el);
+    if (bad.length) {
+      if (bad.some((el) => el.closest('details'))) $('details.more').open = true;   // 접힌 선택 항목 안의 오류도 보이게
+      bad[0].focus();
+      bad[0].closest('.field').scrollIntoView({ block: 'center' });
       return;
     }
     if (!consentEl.checked) return;
